@@ -71,7 +71,7 @@ model.add(Conv1D(filters=20, kernel_size=3, activation='relu',padding='same'))
 
 model.add(Flatten())
 
-model.add(Dense(filters=3, activation='softmax'))
+model.add(Dense(3, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
