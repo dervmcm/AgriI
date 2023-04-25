@@ -1,0 +1,96 @@
+/*
+filename: styles.css
+author: Dervla McMahon
+created: 25/04/2023
+description: SVG Basic Styling
+*/
+
+h1, h2, p, text  {font-family: garamond, serif;}
+
+h1 {color:#4B3B40; font-weight:bold; font-size:4em;}
+h2 {color:#6C804D; font-weight:bold; font-size:3em;}
+
+text {color:#82735C; font-size:0.7em;}
+
+body {
+  background-color: #F3FCED;
+}
+
+/* The side navigation menu */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #D1F5BE;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  color: #82735C;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  background-color: #F3FCED;
+  color: #4B3B40;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: #82735C;
+  color: #D1F5BE;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.main {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+footer {font-style: italic;}
+
+
+
+footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: black;
+  text-align: center;
+  font-size: 0.7em;
+  color:#82735C
+}
+
+
+.line {
+  fill: none;
+  stroke: slategrey;
+  stroke-width: 1.5;
+}
+
+.area {
+  fill: lightblue;
+  stroke: none;
+  stroke-width: 0.5;
+}
+
+.halfMilMark {
+  fill: none;
+  stroke: red;
+  stroke-dasharray: 5;
+  stroke-width: 0.5;
+}
+
+.halfMilLabel {
+  fill: red;
+  stroke: red;
+
+}
