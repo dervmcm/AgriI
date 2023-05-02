@@ -94,3 +94,20 @@ footer {
   stroke: red;
 
 }
+
+/*Homepage menu styling*/
+.grid-options {
+    display: inline-grid;
+    gap: 5px;
+    color: #008148;
+    grid-template-columns: auto auto auto;
+}
+
+.home-grid {
+    fill: #A5FFD6;
+}
+
+.grid-button {
+    outline: 2px solid #345995;
+    border-radius: 20px;
+}
