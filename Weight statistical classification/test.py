@@ -1,6 +1,8 @@
 #import matplotlib.pyplot as plt
 from datetime import datetime
 import dateutil.parser
+import csv
+from collections import defaultdict
 
 test = open('test_data.txt', 'r')
 text_to_list = []
@@ -24,7 +26,7 @@ weight_to_list.pop(14)
 mean = sum(weight_to_list) / len(weight_to_list)
 variance = sum([((x - mean) ** 2) for x in weight_to_list]) / len(weight_to_list)
 res = variance ** 0.5
-#print("Standard deviation of sample is : " + str(res))
+##print("Standard deviation of sample is : " + str(res))
 
 for i in range(0,text_to_list.__len__()):
     if i > 0:
@@ -35,7 +37,7 @@ for i in range(0,text_to_list.__len__()):
             normal = False
         text_to_list[i].append(diff)
         text_to_list[i].append(normal)
-        #print("Date: ", text_to_list[i][3], "||", text_to_list[prev][2], ", ", text_to_list[i][2], "| diff = ", diff, "|" , normal)
+        ##print("Date: ", text_to_list[i][3], "||", text_to_list[prev][2], ", ", text_to_list[i][2], "| diff = ", diff, "|" , normal)
     else:
         text_to_list[i].append(0)
         text_to_list[i].append(0)
@@ -72,7 +74,7 @@ ttl.sort(key=lambda x: x[3])
 mean = sum(wtl) / len(wtl)
 variance = sum([((x - mean) ** 2) for x in wtl]) / len(wtl)
 res = variance ** 0.5
-print("Standard deviation of sample is : " + str(res))
+##print("Standard deviation of sample is : " + str(res))
 
 for i in range(0,ttl.__len__()):
     if i > 0:
@@ -83,7 +85,68 @@ for i in range(0,ttl.__len__()):
             normal = False
         ttl[i].append(diff)
         ttl[i].append(normal)
-        print("Date: ", ttl[i][3], "||", ttl[prev][2], ", ", ttl[i][2], "\t| diff = ", diff, "\t|" , normal)
+        ##print("Date: ", ttl[i][3], "||", ttl[prev][2], ", ", ttl[i][2], "\t| diff = ", diff, "\t|" , normal)
     else:
         ttl[i].append(0)
         ttl[i].append(0)
+
+########################################################################################################################
+file = open("Belmont_cows_WOW.csv", "r")
+data = list(csv.reader(file, delimiter=","))
+file.close()
+ttl = []
+count = 0
+
+for i in data:
+    if count > 0:
+        date = dateutil.parser.parse(i[3])
+        i[3] = date
+        ttl.append(i)
+    count+=1
+
+groups = defaultdict(list)    
+
+for obj in ttl:
+    groups[obj[1]].append(obj)
+
+new_list = groups.values()
+
+for i in new_list:
+    #sorting dates
+    i.sort(key = lambda x: x[3])
+    wtl = []
+    
+    for j in i:
+        wtl.append(float(j[2]))
+    
+    # Standard deviation of list
+    mean = sum(wtl) / len(wtl)
+    variance = sum([((x - mean) ** 2) for x in wtl]) / len(wtl)
+    res = variance ** 0.5
+    print("Standard deviation of sample", i[0][1] ," is : " + str(res))
+
+    for j in range(0,len(i)):
+        if j > 0:
+            normal = True
+            prev = j-1
+            diff = (float(i[j][2]) - float(i[prev][2]))
+            if diff > res or diff < -res:
+                normal = False
+            i[j].append(diff)
+            i[j].append(normal)
+            print("Date: ", i[j][3], "||", i[prev][2], ", ", i[j][2], "\t| diff = ", diff, "\t|" , normal)
+        else:
+            i[j].append(0)
+            i[j].append(0)
+
+with open(r'test_file_2.txt', 'w') as fp:
+    for item in new_list:
+        for i in item:
+            date = i[3].strftime("%m/%d/%Y")
+            i[3] = date
+            for j in i:
+                fp.write("%s" % j)
+                fp.write(",")
+            # write each item on a new line
+            fp.write("\n")
+    print('Done')
