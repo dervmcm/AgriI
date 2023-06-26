@@ -1,0 +1,2 @@
+num,RFID,Weight,Date,Location,cattle_id,prev_diff,within_standard_dev,padding_remove
+1,982 123766109106,286.42,12/12/2021,12.Bel,620054026f4f000063005f39,0,True,

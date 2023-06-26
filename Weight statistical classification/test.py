@@ -90,7 +90,12 @@ for i in range(0,ttl.__len__()):
         ttl[i].append(0)
         ttl[i].append(0)
 
+
+
 ########################################################################################################################
+
+
+
 file = open("Belmont_cows_WOW.csv", "r")
 data = list(csv.reader(file, delimiter=","))
 file.close()
@@ -110,6 +115,7 @@ for obj in ttl:
     groups[obj[1]].append(obj)
 
 new_list = groups.values()
+total_res = 0
 
 for i in new_list:
     #sorting dates
@@ -124,6 +130,7 @@ for i in new_list:
     variance = sum([((x - mean) ** 2) for x in wtl]) / len(wtl)
     res = variance ** 0.5
     print("Standard deviation of sample", i[0][1] ," is : " + str(res))
+    total_res+=res
 
     for j in range(0,len(i)):
         if j > 0:
@@ -137,16 +144,47 @@ for i in new_list:
             print("Date: ", i[j][3], "||", i[prev][2], ", ", i[j][2], "\t| diff = ", diff, "\t|" , normal)
         else:
             i[j].append(0)
-            i[j].append(0)
+            i[j].append("True")
 
-with open(r'test_file_2.txt', 'w') as fp:
+print("Average Standard Deviation is ", total_res/len(new_list), "| Total Unique CattleIDs: ", len(new_list))
+
+count = 0
+
+with open(r'allcattle.csv', 'w') as fp:
+    fp.write("num,RFID,Weight,Date,Location,cattle_id,prev_diff,within_standard_dev,padding_remove\n")
     for item in new_list:
         for i in item:
             date = i[3].strftime("%m/%d/%Y")
             i[3] = date
+            count += 1
+            i[0] = count
+            for j in i:
+                fp.write("%s" % j)
+                fp.write(",")
+            # write each item on a new line
+            fp.write("\n")          
+    print('Done')
+print(count)
+
+#Writing into individual files for each cattle ID
+
+'''num_of_unique = 0
+current = None
+for item in new_list:
+    filename = item[0][1]
+    with open('individualrecords/%s.csv' % filename, 'w') as fp:
+        fp.write("num,RFID,Weight,Date,Location,cattle_id,prev_diff,within_standard_dev,padding_remove\n")
+        numcount = 1
+        for i in item:
+            i[0] = numcount
+            date = i[3].strftime("%m/%d/%Y")
+            i[3] = date
+            numcount+=1
             for j in i:
                 fp.write("%s" % j)
                 fp.write(",")
             # write each item on a new line
             fp.write("\n")
-    print('Done')
+    num_of_unique+=1
+print(num_of_unique)
+'''
